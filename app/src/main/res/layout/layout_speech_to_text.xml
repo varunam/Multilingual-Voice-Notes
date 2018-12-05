@@ -1,20 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent">
 
-    <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/mic_animation_id"
+    <FrameLayout
+            android:id="@+id/mic_layout_id"
             android:layout_width="200dp"
-            android:layout_height="200dp"
             android:layout_centerInParent="true"
-            app:lottie_rawRes="@raw/blue_mic"
-            app:lottie_colorFilter="@color/colorPrimary"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-    />
+            android:layout_height="200dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/mic_animation_id"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:lottie_rawRes="@raw/blue_mic"
+                app:lottie_colorFilter="@color/colorAccent"
+                app:lottie_loop="true"
+        />
+
+
+        <ImageView
+                android:id="@+id/accentOvalId"
+                android:background="@drawable/circle_accent"
+                android:layout_gravity="center"
+                android:layout_width="130dp"
+                android:layout_height="130dp"/>
+
+
+        <ImageView
+                android:id="@+id/primaryOvalId"
+                android:background="@drawable/circle_purple"
+                android:layout_gravity="center"
+                android:layout_width="120dp"
+                android:layout_height="120dp"/>
+
+        <ImageView
+                android:id="@+id/micId"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/mic_icon"
+                android:layout_gravity="center"
+        />
+
+    </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
