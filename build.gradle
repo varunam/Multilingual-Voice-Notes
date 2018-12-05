@@ -25,3 +25,13 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    compileSdkVersion = 28
+    targetSdkVersion = 28
+    constraintLayoutVersion = '2.0.0-alpha2'
+    lottieAnimationVersion = '2.8.0'
+    appCompatVersion = '1.1.0-alpha01'
+    materialVersion = '1.1.0'
+
+}
