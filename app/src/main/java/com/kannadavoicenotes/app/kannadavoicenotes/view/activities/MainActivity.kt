@@ -2,17 +2,15 @@ package com.kannadavoicenotes.app.kannadavoicenotes.view.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.speech.RecognizerIntent
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import app.speechtotext.SpeechConvertedListener
-import app.speechtotext.SpeechToTextConverter
 import app.speechtotext.SpeechToTextConverter.TEXT_TO_SPEECH_REQUEST_KEY
 import com.kannadavoicenotes.app.kannadavoicenotes.R
-import com.kannadavoicenotes.app.kannadavoicenotes.utils.LanguagePreference
 import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.ChooseLanguageFragment
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), SpeechConvertedListener {
 
@@ -21,15 +19,6 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val speechToTextConverter = SpeechToTextConverter(this)
-        testButton.setOnClickListener {
-            speechToTextConverter.start(LanguagePreference.getSelectedLanguage(applicationContext), "Try something")
-        }
-
-        Handler().postDelayed({
-            launchChooseLangFragment()
-        }, 3000)
     }
 
     private fun launchChooseLangFragment() {
@@ -43,6 +32,18 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
 
     override fun onSpeechConvertedToText(resultText: String?) {
         Toast.makeText(applicationContext, resultText, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item!!.itemId == R.id.change_lang_id) {
+            launchChooseLangFragment()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
