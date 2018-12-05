@@ -1,4 +1,4 @@
-package com.kannadavoicenotes.app.kannadavoicenotes
+package com.kannadavoicenotes.app.kannadavoicenotes.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

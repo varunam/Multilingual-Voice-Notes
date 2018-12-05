@@ -13,10 +13,10 @@ import androidx.viewpager.widget.ViewPager
 import app.speechtotext.SpeechConvertedListener
 import app.speechtotext.SpeechToTextConverter.TEXT_TO_SPEECH_REQUEST_KEY
 import com.google.android.material.tabs.TabLayout
-import com.kannadavoicenotes.app.kannadavoicenotes.MainViewModel
 import com.kannadavoicenotes.app.kannadavoicenotes.R
 import com.kannadavoicenotes.app.kannadavoicenotes.adapter.ViewPagerAdapter
 import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.ChooseLanguageFragment
+import com.kannadavoicenotes.app.kannadavoicenotes.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity(), SpeechConvertedListener {
 
@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
             if (resultCode == RESULT_OK && data != null) {
                 val result = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                Toast.makeText(applicationContext, result[0], Toast.LENGTH_LONG).show()
                 //posting result received
                 mainViewModel!!.resultReceived.postValue(result[0])
             }

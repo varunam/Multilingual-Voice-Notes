@@ -8,8 +8,8 @@
     <FrameLayout
             android:id="@+id/mic_layout_id"
             android:layout_width="200dp"
-            android:layout_centerInParent="true"
-            android:paddingBottom="40dp"
+            android:layout_alignBottom="@id/transparent_view_id"
+            android:layout_centerHorizontal="true"
             android:layout_height="200dp">
 
 
@@ -38,9 +38,17 @@
 
     </FrameLayout>
 
+    <View
+            android:id="@+id/transparent_view_id"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+    />
+
     <TextView
             android:id="@+id/result_text_id"
-            android:layout_below="@id/mic_layout_id"
+            android:layout_below="@id/transparent_view_id"
+            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:textSize="18sp"
             android:fontFamily="@font/muli_bold"
@@ -55,7 +63,7 @@
             android:orientation="horizontal"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5dp"
             android:layout_alignParentBottom="true"
             android:layout_height="wrap_content">
 
