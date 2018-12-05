@@ -3,22 +3,37 @@ package com.kannadavoicenotes.app.kannadavoicenotes.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.support.design.widget.TabLayout
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import app.speechtotext.SpeechConvertedListener
 import app.speechtotext.SpeechToTextConverter.TEXT_TO_SPEECH_REQUEST_KEY
 import com.kannadavoicenotes.app.kannadavoicenotes.R
+import com.kannadavoicenotes.app.kannadavoicenotes.adapter.ViewPagerAdapter
 import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.ChooseLanguageFragment
 
 class MainActivity : AppCompatActivity(), SpeechConvertedListener {
 
-    var chooseLanguageFragment: ChooseLanguageFragment? = null
+    private var chooseLanguageFragment: ChooseLanguageFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        val viewPager = findViewById<ViewPager>(R.id.viewpager)
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        viewPager.adapter = adapter
+
+        val tabLayout = findViewById<TabLayout>(R.id.tabs)
+        tabLayout.setupWithViewPager(viewPager)
+
     }
 
     private fun launchChooseLangFragment() {
