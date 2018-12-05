@@ -3,15 +3,17 @@ package com.kannadavoicenotes.app.kannadavoicenotes.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProviders
+import androidx.viewpager.widget.ViewPager
 import app.speechtotext.SpeechConvertedListener
 import app.speechtotext.SpeechToTextConverter.TEXT_TO_SPEECH_REQUEST_KEY
+import com.google.android.material.tabs.TabLayout
+import com.kannadavoicenotes.app.kannadavoicenotes.MainViewModel
 import com.kannadavoicenotes.app.kannadavoicenotes.R
 import com.kannadavoicenotes.app.kannadavoicenotes.adapter.ViewPagerAdapter
 import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.ChooseLanguageFragment
@@ -19,10 +21,13 @@ import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.ChooseLanguage
 class MainActivity : AppCompatActivity(), SpeechConvertedListener {
 
     private var chooseLanguageFragment: ChooseLanguageFragment? = null
+    private var mainViewModel: MainViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -67,6 +72,8 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
                 val result = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                 Toast.makeText(applicationContext, result[0], Toast.LENGTH_LONG).show()
+                //posting result received
+                mainViewModel!!.resultReceived.postValue(result[0])
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

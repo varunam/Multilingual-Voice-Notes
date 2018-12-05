@@ -32,6 +32,8 @@ dependencies {
     implementation "com.google.android.material:material:${rootProject.ext.appCompatVersion}"
     implementation "com.airbnb.android:lottie:${rootProject.ext.lottieAnimationVersion}"
     implementation "androidx.recyclerview:recyclerview:${rootProject.ext.appCompatVersion}"
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.lifecycle_version}"
     testImplementation "junit:junit:4.12"
     androidTestImplementation "androidx.test:runner:1.1.1-alpha01"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1-alpha01"

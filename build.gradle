@@ -33,5 +33,5 @@ ext {
     lottieAnimationVersion = '2.8.0'
     appCompatVersion = '1.1.0-alpha01'
     materialVersion = '1.1.0'
-
+    lifecycle_version='2.0.0'
 }
