@@ -11,7 +11,7 @@ import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.ChooseLanguage
 
 class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
 
-    private val title = arrayOf("Translator", "History")
+    private val title = arrayOf("Speech to text", "History")
 
     override fun getItem(position: Int): Fragment {
         return ChooseLanguageFragment.newInstance()
