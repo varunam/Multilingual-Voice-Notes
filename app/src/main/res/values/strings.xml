@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KannadaVoiceNotes</string>
+    <string name="choose_lang">Choose Language</string>
 </resources>
