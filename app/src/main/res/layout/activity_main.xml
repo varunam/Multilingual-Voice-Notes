@@ -32,27 +32,16 @@
 
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
+            android:layout_below="@id/appbarLayoutId"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <FrameLayout
             android:id="@+id/main_container_id"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:layout_below="@id/appbarLayoutId"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="30dp"
-            android:clickable="true"
-            android:src="@drawable/share_icon"
-            android:focusable="true"
-            android:elevation="6dp"
-            app:fabSize="normal"
-            android:layout_height="wrap_content"/>
 
 </RelativeLayout>

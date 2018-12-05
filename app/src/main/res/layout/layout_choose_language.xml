@@ -24,7 +24,7 @@
             android:layout_below="@id/choose_lang"
             android:id="@+id/lang_recycler_view_id"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
     </androidx.recyclerview.widget.RecyclerView>
 
