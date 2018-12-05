@@ -1,0 +1,3 @@
+[submodule "speechToText"]
+	path = speechtotext
+	url = https://github.com/varunam/Speech-To-Text-for-Android.git]
