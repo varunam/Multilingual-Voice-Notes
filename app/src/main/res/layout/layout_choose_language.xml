@@ -7,7 +7,7 @@
 >
 
     <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:id="@+id/choose_lang"
             android:textSize="20sp"
             android:fontFamily="@font/muli_bold"

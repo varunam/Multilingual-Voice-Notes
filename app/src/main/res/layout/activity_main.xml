@@ -39,7 +39,6 @@
 
     <FrameLayout
             android:id="@+id/main_container_id"
-            android:layout_marginTop="50dp"
             android:layout_below="@id/appbarLayoutId"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
