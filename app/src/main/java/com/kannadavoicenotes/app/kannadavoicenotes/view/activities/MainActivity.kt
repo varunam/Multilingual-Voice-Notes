@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
         if (chooseLanguageFragment == null)
             chooseLanguageFragment = ChooseLanguageFragment.newInstance()
         supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_bottom, 0, 0, R.anim.exit_to_bottom)
             .replace(R.id.main_container_id, chooseLanguageFragment!!)
             .addToBackStack(ChooseLanguageFragment::class.java.simpleName)
             .commit()
