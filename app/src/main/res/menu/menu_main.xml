@@ -6,7 +6,25 @@
             android:title="@string/lauguage"
             android:orderInCategory="100"
             android:icon="@drawable/lang_icon"
-            app:showAsAction="always"
+            app:showAsAction="ifRoom"
     />
+
+    <item
+            android:id="@+id/rate_app_id"
+            android:title="@string/rate_this_app"
+            app:showAsAction="collapseActionView"
+            android:orderInCategory="101"/>
+
+    <item
+            android:id="@+id/share_app_id"
+            android:title="@string/refer_friend"
+            app:showAsAction="collapseActionView"
+            android:orderInCategory="90"/>
+
+    <item
+            android:id="@+id/feedback_id"
+            android:title="@string/feedback"
+            app:showAsAction="collapseActionView"
+            android:orderInCategory="102"/>
 
 </menu>

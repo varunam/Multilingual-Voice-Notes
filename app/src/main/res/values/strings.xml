@@ -7,4 +7,15 @@
     <string name="share">Share</string>
     <string name="circle">circle</string>
     <string name="mic_icon">Mic Icon</string>
+    <string name="rate_this_app">Rate this app</string>
+    <string name="share_this_app">Share this app</string>
+    <string name="refer_friend">Refer Friend</string>
+    <string name="feedback">Provide feedback</string>
+    <string name="want_to_contact">MVM App user wants to contact you</string>
+    <string name="hitham_email">hithamcreations@gmail.com</string>
+    <string name="hello_hitham">Hello HithAM,</string>
+    <string name="please_enter_msg_here"><![CDATA[<< -- Please enter your message here -->>]]></string>
+    <string name="regards">Regards,</string>
+    <string name="multilingual_user">Multi-lingual Voice Notes User</string>
+    <string name="FRAMING_EMAIL">Framing email for you</string>
 </resources>
