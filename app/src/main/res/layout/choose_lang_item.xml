@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="horizontal"
         android:id="@+id/lang_item_id"
         android:layout_width="match_parent"
         android:gravity="center"
@@ -22,8 +22,8 @@
     <ImageView
             android:id="@+id/lang_chosen_mark_id"
             android:layout_marginStart="10dp"
-            android:src="@drawable/selected"
+            app:srcCompat="@drawable/selected"
             android:layout_width="30dp"
-            android:layout_height="30dp"/>
+            android:layout_height="30dp" android:contentDescription="@string/selected"/>
 
 </LinearLayout>

@@ -6,5 +6,5 @@ import app.speechtotext.Language
  * Created by varun.am on 05/12/18
  */
 interface LangSelectedListener {
-    public fun onLangSelected(language: Language)
+    fun onLangSelected(language: Language)
 }

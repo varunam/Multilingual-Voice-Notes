@@ -10,19 +10,19 @@ import app.speechtotext.Language
  */
 object LanguagePreference {
 
-    private val PREF_LANG_KEY = "pref-lang-key"
-    private val LANG_KEY = "lang-key"
+    private const val PREF_LANG_KEY = "pref-lang-key"
+    private const val LANG_KEY = "lang-key"
 
     private var langPref: SharedPreferences? = null
 
-    public fun setLanguage(context: Context, language: Language) {
+    fun setLanguage(context: Context, language: Language) {
         langPref = context.getSharedPreferences(PREF_LANG_KEY, MODE_PRIVATE)
         val editor = langPref!!.edit()
         editor.putString(LANG_KEY, language.name)
         editor.apply()
     }
 
-    public fun getSelectedLanguage(context: Context): Language {
+    fun getSelectedLanguage(context: Context): Language {
         langPref = context.getSharedPreferences(PREF_LANG_KEY, MODE_PRIVATE)
         return getLangFromString(langPref!!.getString(LANG_KEY, Language.KANNADA.name))
     }

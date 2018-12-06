@@ -15,10 +15,10 @@ class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager)
     private val title = arrayOf("Speech to text", "History")
 
     override fun getItem(position: Int): Fragment {
-        if(position==0)
-            return SpeechToTextFragment.newInstance()
+        return if(position==0)
+            SpeechToTextFragment.newInstance()
         else
-            return HistoryFragment.newInstance()
+            HistoryFragment.newInstance()
     }
 
     override fun getCount(): Int {

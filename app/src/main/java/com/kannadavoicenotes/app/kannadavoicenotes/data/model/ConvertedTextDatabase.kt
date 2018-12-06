@@ -15,7 +15,7 @@ import com.kannadavoicenotes.app.kannadavoicenotes.utils.DateConverter
 abstract class ConvertedTextDatabase : RoomDatabase() {
 
     companion object {
-        val DATABASE_NAME = "convertedText.db"
+        private const val DATABASE_NAME = "convertedText.db"
         private var INSTANCE: ConvertedTextDatabase? = null
 
         fun getInstance(context: Context): ConvertedTextDatabase? {
@@ -29,10 +29,6 @@ abstract class ConvertedTextDatabase : RoomDatabase() {
                 }
             }
             return INSTANCE
-        }
-
-        fun destroyInstance() {
-            INSTANCE = null
         }
     }
 

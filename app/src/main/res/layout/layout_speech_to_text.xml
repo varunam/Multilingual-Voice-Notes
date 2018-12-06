@@ -29,7 +29,7 @@
                     android:background="@drawable/circle_accent"
                     android:layout_gravity="center"
                     android:layout_width="140dp"
-                    android:layout_height="140dp"/>
+                    android:layout_height="140dp" android:contentDescription="@string/circle"/>
 
 
             <ImageView
@@ -37,7 +37,7 @@
                     android:background="@drawable/circle_purple"
                     android:layout_gravity="center"
                     android:layout_width="130dp"
-                    android:layout_height="130dp"/>
+                    android:layout_height="130dp" android:contentDescription="@string/circle"/>
 
             <ImageView
                     android:id="@+id/micId"
@@ -45,7 +45,7 @@
                     android:layout_height="90dp"
                     app:srcCompat="@drawable/mic_icon"
                     android:layout_gravity="center"
-            />
+                    android:contentDescription="@string/mic_icon"/>
 
         </FrameLayout>
 

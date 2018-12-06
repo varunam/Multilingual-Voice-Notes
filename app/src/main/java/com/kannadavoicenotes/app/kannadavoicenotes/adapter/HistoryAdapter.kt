@@ -23,7 +23,7 @@ class HistoryAdapter(shareClickCallbacks: ShareClickCallbacks) : RecyclerView.Ad
         this.shareClickCallbacks = shareClickCallbacks
     }
 
-    public fun setTextList(textList: ArrayList<ConvertedText>) {
+    fun setTextList(textList: ArrayList<ConvertedText>) {
         this.textList = textList
         notifyDataSetChanged()
     }
@@ -46,10 +46,10 @@ class HistoryAdapter(shareClickCallbacks: ShareClickCallbacks) : RecyclerView.Ad
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var layout = itemView.findViewById<ConstraintLayout>(R.id.history_item_id)
-        var text = itemView.findViewById<TextView>(R.id.history_text_id)
-        var share = itemView.findViewById<ImageView>(R.id.history_share_id)
-        var timeStamp = itemView.findViewById<TextView>(R.id.history_timestamp_id)
+        var layout = itemView.findViewById<ConstraintLayout>(R.id.history_item_id)!!
+        var text = itemView.findViewById<TextView>(R.id.history_text_id)!!
+        var share = itemView.findViewById<ImageView>(R.id.history_share_id)!!
+        var timeStamp = itemView.findViewById<TextView>(R.id.history_timestamp_id)!!
 
     }
 }
