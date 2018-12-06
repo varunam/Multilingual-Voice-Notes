@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -27,6 +29,8 @@ class SpeechToTextFragment : Fragment() {
 
     private var mainViewModel: MainViewModel? = null
     private var resultTextView: TextView? = null
+    private var copyContent: FloatingActionButton? = null
+    private var shareContent: FloatingActionButton? = null
 
     companion object {
         private val TAG: String = SpeechToTextFragment::class.java.simpleName
@@ -47,21 +51,47 @@ class SpeechToTextFragment : Fragment() {
 
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
         mainViewModel!!.resultReceived.observe(this, resultObserver)
+        copyContent = view.findViewById(R.id.copy_content_fab_id)
+        shareContent = view.findViewById(R.id.share_content_fab_id)
         resultTextView = view.findViewById(R.id.result_text_id)
-        resultTextView!!.text = ""
+        hideFabs()
         val micLayout = view.findViewById<ImageView>(R.id.micId)
         micLayout.setOnClickListener {
             val speechToTextConverter = SpeechToTextConverter(activity!!)
             speechToTextConverter.start(LanguagePreference.getSelectedLanguage(activity!!), null)
         }
 
-        val copyContent = view.findViewById<FloatingActionButton>(R.id.copy_content_fab_id)
-        copyContent.setOnClickListener {
+        copyContent!!.setOnClickListener {
             copyToClipboard(resultTextView!!.text.toString())
+        }
+
+        shareContent!!.setOnClickListener {
+            val mimeType = "text/plain"
+            val shareText = resultTextView!!.text.toString() + "\nShared via Multi-lingual Voice Notes"
+            val title = "share via"
+            ShareCompat.IntentBuilder.from(activity!!)
+                .setChooserTitle(title)
+                .setType(mimeType)
+                .setText(shareText)
+                .startChooser()
         }
     }
 
+    private fun showFabs() {
+        copyContent!!.show()
+        shareContent!!.show()
+        val scaleUpAnim = AnimationUtils.loadAnimation(context, R.anim.scale_up)
+        copyContent!!.startAnimation(scaleUpAnim)
+        shareContent!!.startAnimation(scaleUpAnim)
+    }
+
+    private fun hideFabs() {
+        copyContent!!.hide()
+        shareContent!!.hide()
+    }
+
     private var resultObserver = Observer<String> {
+        showFabs()
         resultTextView!!.text = it
     }
 
