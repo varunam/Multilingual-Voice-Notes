@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import app.speechtotext.Language
+import app.speechtotext.SpeechToTextConverter
 
 /**
  * Created by varun.am on 05/12/18
@@ -28,12 +29,9 @@ object LanguagePreference {
     }
 
     private fun getLangFromString(languageInString: String?): Language {
-        when (languageInString) {
-            Language.KANNADA.name -> return Language.KANNADA
-            Language.TAMIL.name -> return Language.TAMIL
-            Language.TELUGU.name -> return Language.TELUGU
-            Language.MALAYALAM.name -> return Language.MALAYALAM
-            Language.HINDI.name -> return Language.HINDI
+        for (language in SpeechToTextConverter.getAvailableLanguages()) {
+            if (language.name == languageInString)
+                return language
         }
         return Language.KANNADA
     }

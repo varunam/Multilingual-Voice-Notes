@@ -15,6 +15,7 @@ import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import app.speechtotext.Language
 import app.speechtotext.SpeechToTextConverter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kannadavoicenotes.app.kannadavoicenotes.R
@@ -60,7 +61,10 @@ class SpeechToTextFragment : Fragment() {
         val micLayout = view.findViewById<ImageView>(R.id.micId)
         micLayout.setOnClickListener {
             val speechToTextConverter = SpeechToTextConverter(activity!!)
-            speechToTextConverter.start(LanguagePreference.getSelectedLanguage(activity!!), null)
+            speechToTextConverter.start(
+                LanguagePreference.getSelectedLanguage(activity!!),
+                getPromptForChosenLanguage()
+            )
 
         }
 
@@ -77,6 +81,17 @@ class SpeechToTextFragment : Fragment() {
                 .setType(mimeType)
                 .setText(shareText)
                 .startChooser()
+        }
+    }
+
+    private fun getPromptForChosenLanguage(): String? {
+        return when (LanguagePreference.getSelectedLanguage(activity!!)) {
+            Language.KANNADA -> resources.getString(R.string.kannada_prompt)
+            Language.HINDI -> resources.getString(R.string.hindi_prompt)
+            Language.MALAYALAM -> resources.getString(R.string.malayalam_prompt)
+            Language.TELUGU -> resources.getString(R.string.telugu_prompt)
+            Language.TAMIL -> resources.getString(R.string.tamil_prompt)
+            else -> resources.getString(R.string.english_prompt)
         }
     }
 
@@ -98,7 +113,7 @@ class SpeechToTextFragment : Fragment() {
         resultTextView!!.text = it
 
         //inserting data
-        Thread{
+        Thread {
             ConvertedTextDatabase.getInstance(activity!!)!!
                 .convertedTextDao()
                 .insertConvertedText(
