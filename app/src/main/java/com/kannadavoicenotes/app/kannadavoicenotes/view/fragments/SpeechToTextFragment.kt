@@ -18,6 +18,8 @@ import androidx.lifecycle.ViewModelProviders
 import app.speechtotext.SpeechToTextConverter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kannadavoicenotes.app.kannadavoicenotes.R
+import com.kannadavoicenotes.app.kannadavoicenotes.data.model.ConvertedText
+import com.kannadavoicenotes.app.kannadavoicenotes.data.model.ConvertedTextDatabase
 import com.kannadavoicenotes.app.kannadavoicenotes.utils.LanguagePreference
 import com.kannadavoicenotes.app.kannadavoicenotes.viewmodel.MainViewModel
 
@@ -59,6 +61,7 @@ class SpeechToTextFragment : Fragment() {
         micLayout.setOnClickListener {
             val speechToTextConverter = SpeechToTextConverter(activity!!)
             speechToTextConverter.start(LanguagePreference.getSelectedLanguage(activity!!), null)
+
         }
 
         copyContent!!.setOnClickListener {
@@ -93,6 +96,15 @@ class SpeechToTextFragment : Fragment() {
     private var resultObserver = Observer<String> {
         showFabs()
         resultTextView!!.text = it
+
+        //inserting data
+        Thread{
+            ConvertedTextDatabase.getInstance(activity!!)!!
+                .convertedTextDao()
+                .insertConvertedText(
+                    ConvertedText(it)
+                )
+        }.start()
     }
 
     private fun copyToClipboard(text: String) {

@@ -7,6 +7,7 @@ package com.kannadavoicenotes.app.kannadavoicenotes.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.HistoryFragment
 import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.SpeechToTextFragment
 
 class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
@@ -14,7 +15,10 @@ class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager)
     private val title = arrayOf("Speech to text", "History")
 
     override fun getItem(position: Int): Fragment {
-        return SpeechToTextFragment.newInstance()
+        if(position==0)
+            return SpeechToTextFragment.newInstance()
+        else
+            return HistoryFragment.newInstance()
     }
 
     override fun getCount(): Int {

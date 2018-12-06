@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-android-extensions'
 
@@ -11,6 +12,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
+        vectorDrawables.useSupportLibrary = true
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,6 +34,9 @@ dependencies {
     implementation "com.google.android.material:material:${rootProject.ext.appCompatVersion}"
     implementation "com.airbnb.android:lottie:${rootProject.ext.lottieAnimationVersion}"
     implementation "androidx.recyclerview:recyclerview:${rootProject.ext.appCompatVersion}"
+    //room
+    implementation "androidx.room:room-runtime:${rootProject.ext.room_version}"
+    kapt "androidx.room:room-compiler:${rootProject.ext.room_version}"
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.lifecycle_version}"
     testImplementation "junit:junit:4.12"
