@@ -9,13 +9,19 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.kannadavoicenotes.app.kannadavoicenotes.R
 import com.kannadavoicenotes.app.kannadavoicenotes.data.model.ConvertedText
+import com.kannadavoicenotes.app.kannadavoicenotes.interfaces.ShareClickCallbacks
 
 /**
  * Created by varun.am on 06/12/18
  */
-class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+class HistoryAdapter(shareClickCallbacks: ShareClickCallbacks) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     private var textList = ArrayList<ConvertedText>()
+    private var shareClickCallbacks: ShareClickCallbacks? = null
+
+    init {
+        this.shareClickCallbacks = shareClickCallbacks
+    }
 
     public fun setTextList(textList: ArrayList<ConvertedText>) {
         this.textList = textList
@@ -34,7 +40,9 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: HistoryAdapter.ViewHolder, position: Int) {
         holder.text.text = textList[position].text
         holder.timeStamp.text = textList[position].dateAdded.toString()
-
+        holder.share.setOnClickListener {
+            shareClickCallbacks!!.onShareButtonClicked(textList[position])
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,12 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kannadavoicenotes.app.kannadavoicenotes.R
 import com.kannadavoicenotes.app.kannadavoicenotes.adapter.HistoryAdapter
+import com.kannadavoicenotes.app.kannadavoicenotes.data.model.ConvertedText
+import com.kannadavoicenotes.app.kannadavoicenotes.interfaces.ShareClickCallbacks
 import com.kannadavoicenotes.app.kannadavoicenotes.viewmodel.MainViewModel
 
 /**
  * Created by varun.am on 06/12/18
  */
-class HistoryFragment : Fragment() {
+class HistoryFragment : Fragment(), ShareClickCallbacks {
 
     private var mainViewModel: MainViewModel? = null
     private var recyclerView: RecyclerView? = null
@@ -44,7 +47,7 @@ class HistoryFragment : Fragment() {
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
         retrieveSavedConvertedText()
         recyclerView = view.findViewById(R.id.history_recycler_view_id)
-        adapter = HistoryAdapter()
+        adapter = HistoryAdapter(this)
         recyclerView!!.layoutManager = LinearLayoutManager(context!!)
         recyclerView!!.adapter = adapter
 
@@ -54,5 +57,16 @@ class HistoryFragment : Fragment() {
         mainViewModel!!.convertedTextList!!.observe(this, Observer {
             adapter!!.setTextList(ArrayList(it))
         })
+    }
+
+    override fun onShareButtonClicked(convertedText: ConvertedText) {
+        val mimeType = "text/plain"
+        val shareText = convertedText.text + "\nShared via Multi-lingual Voice Notes"
+        val title = "share via"
+        ShareCompat.IntentBuilder.from(activity!!)
+            .setChooserTitle(title)
+            .setType(mimeType)
+            .setText(shareText)
+            .startChooser()
     }
 }
