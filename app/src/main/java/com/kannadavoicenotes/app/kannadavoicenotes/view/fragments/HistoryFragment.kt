@@ -8,11 +8,13 @@ import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kannadavoicenotes.app.kannadavoicenotes.R
 import com.kannadavoicenotes.app.kannadavoicenotes.adapter.HistoryAdapter
 import com.kannadavoicenotes.app.kannadavoicenotes.data.model.ConvertedText
+import com.kannadavoicenotes.app.kannadavoicenotes.data.model.ConvertedTextDatabase
 import com.kannadavoicenotes.app.kannadavoicenotes.interfaces.ShareClickCallbacks
 import com.kannadavoicenotes.app.kannadavoicenotes.viewmodel.MainViewModel
 
@@ -36,7 +38,6 @@ class HistoryFragment : Fragment(), ShareClickCallbacks {
     }
 
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.layout_history, container, false)
     }
@@ -50,6 +51,8 @@ class HistoryFragment : Fragment(), ShareClickCallbacks {
         adapter = HistoryAdapter(this)
         recyclerView!!.layoutManager = LinearLayoutManager(context!!)
         recyclerView!!.adapter = adapter
+
+        touchHelper.attachToRecyclerView(recyclerView)
 
     }
 
@@ -69,4 +72,27 @@ class HistoryFragment : Fragment(), ShareClickCallbacks {
             .setText(shareText)
             .startChooser()
     }
+
+    private var touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+        0,
+        ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            Thread {
+                ConvertedTextDatabase.getInstance(activity!!)!!
+                    .convertedTextDao()
+                    .deleteConvertedText(
+                        (viewHolder as HistoryAdapter.ViewHolder).text.text.toString()
+                    )
+            }.start()
+        }
+    })
 }
