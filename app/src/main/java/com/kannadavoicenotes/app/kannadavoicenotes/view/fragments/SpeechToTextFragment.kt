@@ -36,6 +36,7 @@ class SpeechToTextFragment : Fragment() {
     private var shareContent: FloatingActionButton? = null
 
     companion object {
+        const val SpeechToTextKey = 100
         private val TAG: String = SpeechToTextFragment::class.java.simpleName
         fun newInstance(): SpeechToTextFragment {
             val fragment = SpeechToTextFragment()
@@ -63,7 +64,8 @@ class SpeechToTextFragment : Fragment() {
             val speechToTextConverter = SpeechToTextConverter(activity!!)
             speechToTextConverter.start(
                 LanguagePreference.getSelectedLanguage(activity!!),
-                getPromptForChosenLanguage()
+                getPromptForChosenLanguage(),
+                SpeechToTextKey
             )
 
         }

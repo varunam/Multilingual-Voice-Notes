@@ -15,12 +15,12 @@ import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import app.speechtotext.SpeechConvertedListener
-import app.speechtotext.SpeechToTextConverter.TEXT_TO_SPEECH_REQUEST_KEY
 import com.google.android.material.tabs.TabLayout
 import com.kannadavoicenotes.app.kannadavoicenotes.R
 import com.kannadavoicenotes.app.kannadavoicenotes.adapter.ViewPagerAdapter
 import com.kannadavoicenotes.app.kannadavoicenotes.utils.AppInfo
 import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.ChooseLanguageFragment
+import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.SpeechToTextFragment.Companion.SpeechToTextKey
 import com.kannadavoicenotes.app.kannadavoicenotes.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity(), SpeechConvertedListener {
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == TEXT_TO_SPEECH_REQUEST_KEY) {
+        if (requestCode == SpeechToTextKey) {
             if (resultCode == RESULT_OK && data != null) {
                 val result = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
