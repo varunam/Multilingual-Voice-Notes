@@ -31,6 +31,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.constraintLayoutVersion}"
     implementation project(":speechtotext")
     implementation "androidx.recyclerview:recyclerview:${rootProject.ext.appCompatVersion}"
+    implementation "com.github.amlcurran.showcaseview:library:${rootProject.ext.showCaseViewVersion}"
     implementation "com.google.android.material:material:${rootProject.ext.appCompatVersion}"
     implementation "com.airbnb.android:lottie:${rootProject.ext.lottieAnimationVersion}"
     implementation "androidx.recyclerview:recyclerview:${rootProject.ext.appCompatVersion}"

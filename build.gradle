@@ -34,5 +34,6 @@ ext {
     appCompatVersion = '1.1.0-alpha01'
     materialVersion = '1.1.0'
     lifecycle_version='2.0.0'
+    showCaseViewVersion='5.4.3'
     room_version = '2.1.0-alpha03'
 }

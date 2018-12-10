@@ -2,6 +2,7 @@ package com.kannadavoicenotes.app.kannadavoicenotes.view.activities
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Point
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,8 @@ import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import app.speechtotext.SpeechConvertedListener
+import com.github.amlcurran.showcaseview.ShowcaseView
+import com.github.amlcurran.showcaseview.targets.ViewTarget
 import com.google.android.material.tabs.TabLayout
 import com.kannadavoicenotes.app.kannadavoicenotes.R
 import com.kannadavoicenotes.app.kannadavoicenotes.adapter.ViewPagerAdapter
@@ -23,10 +26,12 @@ import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.ChooseLanguage
 import com.kannadavoicenotes.app.kannadavoicenotes.view.fragments.SpeechToTextFragment.Companion.SpeechToTextKey
 import com.kannadavoicenotes.app.kannadavoicenotes.viewmodel.MainViewModel
 
+
 class MainActivity : AppCompatActivity(), SpeechConvertedListener {
 
     private var chooseLanguageFragment: ChooseLanguageFragment? = null
     private var mainViewModel: MainViewModel? = null
+    private var toolbar: Toolbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +39,7 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val viewPager = findViewById<ViewPager>(R.id.viewpager)
@@ -43,6 +48,55 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
 
         val tabLayout = findViewById<TabLayout>(R.id.tabs)
         tabLayout.setupWithViewPager(viewPager)
+
+        if (!AppInfo.getAppLaunched(applicationContext)) {
+            showAppTutor()
+        }
+
+    }
+
+    private var tutor: ShowcaseView? = null
+    private var counter = 0
+    private fun showAppTutor() {
+        tutor = ShowcaseView.Builder(this)
+            .setTarget {
+                val actionBarSize = toolbar!!.height
+                val actionBarWidth = toolbar!!.width
+                val x = actionBarWidth - actionBarWidth / 5
+                val y = actionBarSize / 2
+                Point(x, y)
+            }
+            .setContentTitle("Choose language!")
+            .setContentText("This app supports multiple Indian languages. Choose one you want to convert speech to text")
+            .setStyle(R.style.ShowcaseViewTheme)
+            .blockAllTouches()
+            .setOnClickListener {
+                if (counter < 1) {
+                    tutor!!.setShowcase(ViewTarget(findViewById(R.id.micId)), true)
+                    tutor!!.setContentTitle("Click and speak")
+                    tutor!!.setContentText("Tap on this mic and start speaking! \nStop speaking to convert speech to text")
+                    counter++
+                } else if (counter < 2) {
+                    tutor!!.setShowcase({
+                        val actionBarSize = toolbar!!.height
+                        val actionBarWidth = toolbar!!.width
+                        val x = actionBarWidth - actionBarWidth / 5
+                        val y = actionBarSize
+                        Point(x, y)
+                    }, true)
+                    tutor!!.setButtonText("Finish")
+                    tutor!!.setContentTitle("History of voice notes")
+                    tutor!!.setContentText("Find all the text converted from speech here.")
+                    counter++
+                } else {
+                    if (tutor != null) {
+                        tutor!!.hide()
+                        tutor = null
+                        AppInfo.setAppLaunched(applicationContext, true)
+                    }
+                }
+            }
+            .build()
 
     }
 

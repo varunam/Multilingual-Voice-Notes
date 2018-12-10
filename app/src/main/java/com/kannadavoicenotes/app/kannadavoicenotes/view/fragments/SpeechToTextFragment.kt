@@ -58,6 +58,8 @@ class SpeechToTextFragment : Fragment() {
         copyContent = view.findViewById(R.id.copy_content_fab_id)
         shareContent = view.findViewById(R.id.share_content_fab_id)
         resultTextView = view.findViewById(R.id.result_text_id)
+        val resultTextDefaultString = resources.getString(R.string.tap_to_speak) + "\nLanguage Selected: " + LanguagePreference.getSelectedLanguage(activity!!).name
+        resultTextView!!.text = resultTextDefaultString
         hideFabs()
         val micLayout = view.findViewById<ImageView>(R.id.micId)
         micLayout.setOnClickListener {

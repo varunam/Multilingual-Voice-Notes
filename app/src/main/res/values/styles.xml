@@ -8,4 +8,26 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ShowcaseViewTheme" parent="ShowcaseView">
+        <item name="sv_backgroundColor">#9c392c11</item>
+        <item name="sv_showcaseColor">#b6f20f08</item>
+        <item name="sv_buttonText">Next</item>
+        <item name="sv_titleTextAppearance">@style/CustomTitle2</item>
+        <item name="sv_detailTextAppearance">@style/CustomText2</item>
+
+    </style>
+
+    <style name="CustomTitle2" parent="TextAppearance.ShowcaseView.Title.Light">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">#ffee</item>
+        <item name="android:textColor">#ffee</item>
+    </style>
+
+    <style name="CustomText2" parent="TextAppearance.ShowcaseView.Detail.Light">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ffee</item>
+    </style>
+
 </resources>
