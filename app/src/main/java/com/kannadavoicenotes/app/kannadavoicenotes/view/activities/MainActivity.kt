@@ -18,7 +18,11 @@ import androidx.viewpager.widget.ViewPager
 import app.speechtotext.SpeechConvertedListener
 import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.ViewTarget
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.tabs.TabLayout
+import com.kannadavoicenotes.app.kannadavoicenotes.BuildConfig
 import com.kannadavoicenotes.app.kannadavoicenotes.R
 import com.kannadavoicenotes.app.kannadavoicenotes.adapter.ViewPagerAdapter
 import com.kannadavoicenotes.app.kannadavoicenotes.utils.AppInfo
@@ -32,12 +36,17 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
     private var chooseLanguageFragment: ChooseLanguageFragment? = null
     private var mainViewModel: MainViewModel? = null
     private var toolbar: Toolbar? = null
+    private var interstitialAd: InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        MobileAds.initialize(this, BuildConfig.AdmobAppId)
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        interstitialAd = InterstitialAd(this)
+        interstitialAd!!.adUnitId = BuildConfig.InterstitialAdTestId
+        loadInterstitialAd()
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -52,7 +61,20 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
         if (!AppInfo.getAppLaunched(applicationContext)) {
             showAppTutor()
         }
+    }
 
+    private fun loadInterstitialAd() {
+        interstitialAd!!.loadAd(AdRequest.Builder().build())
+    }
+
+    private fun showInterstitialAd() {
+        if (interstitialAd!!.isLoaded)
+            interstitialAd!!.show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        showInterstitialAd()
     }
 
     private var tutor: ShowcaseView? = null

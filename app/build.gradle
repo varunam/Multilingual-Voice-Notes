@@ -17,8 +17,42 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            buildConfigField("String", "AdmobAppId", AdmobAppId)
+            resValue("string", "admobAppId", AdmobAppId)
+
+            buildConfigField("String", "BannerAdId", BannerAdKey)
+            resValue("string", "bannerAdId", BannerAdKey)
+
+            buildConfigField("String", "BannerAdTestId", BannerAdTestKey)
+            resValue("string", "bannerAdTestId", BannerAdTestKey)
+
+            buildConfigField("String", "InterstitialAdId", InterstitialAdKey)
+            resValue("string","interstitialAdId", InterstitialAdKey)
+
+            buildConfigField("String", "InterstitialAdTestId", InterstitialAdTestKey)
+            resValue("string","interstitialAdTestId", InterstitialAdTestKey)
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
+            buildConfigField("String", "AdmobAppId", AdmobAppId)
+            resValue("string", "admobAppId", AdmobAppId)
+
+            buildConfigField("String", "BannerAdId", BannerAdKey)
+            resValue("string", "bannerAdId", BannerAdKey)
+
+            buildConfigField("String", "BannerAdTestId", BannerAdTestKey)
+            resValue("string", "bannerAdTestId", BannerAdTestKey)
+
+            buildConfigField("String", "InterstitialAdId", InterstitialAdKey)
+            resValue("string","interstitialAdId", InterstitialAdKey)
+
+            buildConfigField("String", "InterstitialAdTestId", InterstitialAdTestKey)
+            resValue("string","interstitialAdTestId", InterstitialAdTestKey)
+            
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -33,8 +67,9 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:${rootProject.ext.appCompatVersion}"
     implementation "com.github.amlcurran.showcaseview:library:${rootProject.ext.showCaseViewVersion}"
     implementation "com.google.android.material:material:${rootProject.ext.appCompatVersion}"
-    implementation "com.airbnb.android:lottie:${rootProject.ext.lottieAnimationVersion}"
     implementation "androidx.recyclerview:recyclerview:${rootProject.ext.appCompatVersion}"
+    //Google Ads
+    implementation "com.google.android.gms:play-services-ads:${rootProject.ext.playServicesAdsVersion}"
     //room
     implementation "androidx.room:room-runtime:${rootProject.ext.room_version}"
     kapt "androidx.room:room-compiler:${rootProject.ext.room_version}"

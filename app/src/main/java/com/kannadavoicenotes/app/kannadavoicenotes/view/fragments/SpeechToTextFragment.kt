@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import app.speechtotext.Language
 import app.speechtotext.SpeechToTextConverter
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdRequest.*
+import com.google.android.gms.ads.AdView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kannadavoicenotes.app.kannadavoicenotes.R
 import com.kannadavoicenotes.app.kannadavoicenotes.data.model.ConvertedText
@@ -34,6 +39,7 @@ class SpeechToTextFragment : Fragment() {
     private var resultTextView: TextView? = null
     private var copyContent: FloatingActionButton? = null
     private var shareContent: FloatingActionButton? = null
+    private var bannerAdView: AdView? = null
 
     companion object {
         const val SpeechToTextKey = 100
@@ -58,7 +64,13 @@ class SpeechToTextFragment : Fragment() {
         copyContent = view.findViewById(R.id.copy_content_fab_id)
         shareContent = view.findViewById(R.id.share_content_fab_id)
         resultTextView = view.findViewById(R.id.result_text_id)
-        val resultTextDefaultString = resources.getString(R.string.tap_to_speak) + "\nLanguage Selected: " + LanguagePreference.getSelectedLanguage(activity!!).name
+        bannerAdView = view.findViewById(R.id.bannerAdViewId)
+        bannerAdView!!.adListener = bannerAdListener
+        loadBannerAd()
+        val resultTextDefaultString =
+            resources.getString(R.string.tap_to_speak) + "\nLanguage Selected: " + LanguagePreference.getSelectedLanguage(
+                activity!!
+            ).name
         resultTextView!!.text = resultTextDefaultString
         hideFabs()
         val micLayout = view.findViewById<ImageView>(R.id.micId)
@@ -88,6 +100,11 @@ class SpeechToTextFragment : Fragment() {
         }
     }
 
+    private fun loadBannerAd() {
+        val adRequest = AdRequest.Builder().build()
+        bannerAdView!!.loadAd(adRequest)
+    }
+
     private fun getPromptForChosenLanguage(): String? {
         return when (LanguagePreference.getSelectedLanguage(activity!!)) {
             Language.KANNADA -> resources.getString(R.string.kannada_prompt)
@@ -110,6 +127,43 @@ class SpeechToTextFragment : Fragment() {
     private fun hideFabs() {
         copyContent!!.hide()
         shareContent!!.hide()
+    }
+
+    private var bannerAdListener = object : AdListener() {
+        override fun onAdLoaded() {
+            // Code to be executed when an ad finishes loading.
+            Log.d(TAG, "Banner Ad Loaded successfully!")
+        }
+
+        override fun onAdFailedToLoad(errorCode: Int) {
+            // Code to be executed when an ad request fails.
+            when(errorCode){
+                ERROR_CODE_INTERNAL_ERROR -> Log.e(TAG,"Couldn't load bannerAd: Unknown error. Might be invalid response from server")
+                ERROR_CODE_NETWORK_ERROR -> Log.e(TAG,"Couldn't load bannerAd: BAD internet connectivity")
+                ERROR_CODE_INVALID_REQUEST -> Log.e(TAG,"Couldn't load bannerAd: Invalid request. Check IDs used are correct")
+                ERROR_CODE_NO_FILL -> Log.e(TAG,"Couldn't load bannerAd: No ads available to load")
+                else ->
+                    Log.e(TAG, "Banner Ad failed to load. Error Code: $errorCode")
+            }
+        }
+
+        override fun onAdOpened() {
+            // Code to be executed when an ad opens an overlay that
+            // covers the screen.
+            Log.d(TAG, "Banner Ad is opened")
+        }
+
+        override fun onAdLeftApplication() {
+            // Code to be executed when the user has left the app.
+            Log.d(TAG, "User left the application")
+        }
+
+        override fun onAdClosed() {
+            // Code to be executed when when the user is about to return
+            // to the app after tapping on an ad.
+            Log.d(TAG, "Banner Ad closed successfully!")
+        }
+
     }
 
     private var resultObserver = Observer<String> {
