@@ -11,8 +11,8 @@ import app.speechtotext.SpeechToTextConverter
  */
 object LanguagePreference {
 
-    private const val PREF_LANG_KEY = "pref-lang-key"
-    private const val LANG_KEY = "lang-key"
+    public const val PREF_LANG_KEY = "pref-lang-key"
+    public const val LANG_KEY = "lang-key"
 
     private var langPref: SharedPreferences? = null
 

@@ -3,6 +3,8 @@ package com.kannadavoicenotes.app.kannadavoicenotes.view.fragments
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,6 +29,8 @@ import com.kannadavoicenotes.app.kannadavoicenotes.R
 import com.kannadavoicenotes.app.kannadavoicenotes.data.model.ConvertedText
 import com.kannadavoicenotes.app.kannadavoicenotes.data.model.ConvertedTextDatabase
 import com.kannadavoicenotes.app.kannadavoicenotes.utils.LanguagePreference
+import com.kannadavoicenotes.app.kannadavoicenotes.utils.LanguagePreference.LANG_KEY
+import com.kannadavoicenotes.app.kannadavoicenotes.utils.LanguagePreference.PREF_LANG_KEY
 import com.kannadavoicenotes.app.kannadavoicenotes.viewmodel.MainViewModel
 
 
@@ -40,6 +44,7 @@ class SpeechToTextFragment : Fragment() {
     private var copyContent: FloatingActionButton? = null
     private var shareContent: FloatingActionButton? = null
     private var bannerAdView: AdView? = null
+    private var langPref: SharedPreferences? = null
 
     companion object {
         const val SpeechToTextKey = 100
@@ -65,6 +70,8 @@ class SpeechToTextFragment : Fragment() {
         shareContent = view.findViewById(R.id.share_content_fab_id)
         resultTextView = view.findViewById(R.id.result_text_id)
         bannerAdView = view.findViewById(R.id.bannerAdViewId)
+        langPref = context!!.getSharedPreferences(PREF_LANG_KEY, MODE_PRIVATE)
+        langPref!!.registerOnSharedPreferenceChangeListener(sharedPrefChangedListener)
         bannerAdView!!.adListener = bannerAdListener
         loadBannerAd()
         val resultTextDefaultString =
@@ -137,11 +144,17 @@ class SpeechToTextFragment : Fragment() {
 
         override fun onAdFailedToLoad(errorCode: Int) {
             // Code to be executed when an ad request fails.
-            when(errorCode){
-                ERROR_CODE_INTERNAL_ERROR -> Log.e(TAG,"Couldn't load bannerAd: Unknown error. Might be invalid response from server")
-                ERROR_CODE_NETWORK_ERROR -> Log.e(TAG,"Couldn't load bannerAd: BAD internet connectivity")
-                ERROR_CODE_INVALID_REQUEST -> Log.e(TAG,"Couldn't load bannerAd: Invalid request. Check IDs used are correct")
-                ERROR_CODE_NO_FILL -> Log.e(TAG,"Couldn't load bannerAd: No ads available to load")
+            when (errorCode) {
+                ERROR_CODE_INTERNAL_ERROR -> Log.e(
+                    TAG,
+                    "Couldn't load bannerAd: Unknown error. Might be invalid response from server"
+                )
+                ERROR_CODE_NETWORK_ERROR -> Log.e(TAG, "Couldn't load bannerAd: BAD internet connectivity")
+                ERROR_CODE_INVALID_REQUEST -> Log.e(
+                    TAG,
+                    "Couldn't load bannerAd: Invalid request. Check IDs used are correct"
+                )
+                ERROR_CODE_NO_FILL -> Log.e(TAG, "Couldn't load bannerAd: No ads available to load")
                 else ->
                     Log.e(TAG, "Banner Ad failed to load. Error Code: $errorCode")
             }
@@ -165,6 +178,17 @@ class SpeechToTextFragment : Fragment() {
         }
 
     }
+
+    private var sharedPrefChangedListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { sharedPref, key ->
+            if (key == LANG_KEY) {
+                val resultTextDefaultString =
+                    resources.getString(R.string.tap_to_speak) + "\nLanguage Selected: " + LanguagePreference.getSelectedLanguage(
+                        activity!!
+                    ).name
+                resultTextView!!.text = resultTextDefaultString
+            }
+        }
 
     private var resultObserver = Observer<String> {
         showFabs()
