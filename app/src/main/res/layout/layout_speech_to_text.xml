@@ -107,7 +107,7 @@
                 android:id="@+id/bannerAdViewId"
                 app:layout_constraintStart_toStartOf="parent"
                 ads:adSize="BANNER"
-                ads:adUnitId="@string/bannerAdTestId"
+                ads:adUnitId="@string/bannerAdId"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="0dp"/>

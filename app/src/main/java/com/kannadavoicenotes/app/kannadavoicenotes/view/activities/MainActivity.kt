@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -18,6 +19,7 @@ import androidx.viewpager.widget.ViewPager
 import app.speechtotext.SpeechConvertedListener
 import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.ViewTarget
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
     private var mainViewModel: MainViewModel? = null
     private var toolbar: Toolbar? = null
     private var interstitialAd: InterstitialAd? = null
+    private val TAG = MainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,9 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         interstitialAd = InterstitialAd(this)
-        interstitialAd!!.adUnitId = BuildConfig.InterstitialAdTestId
+        interstitialAd!!.adListener = interstitialAdListener
+        //TODO make sure productAdId is used
+        interstitialAd!!.adUnitId = BuildConfig.InterstitialAdId
         loadInterstitialAd()
 
         toolbar = findViewById(R.id.toolbar)
@@ -139,6 +144,43 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
+    }
+
+    private var interstitialAdListener = object : AdListener() {
+        override fun onAdLoaded() {
+            // Code to be executed when an ad finishes loading.
+            Log.d(TAG, "Interstitial Ad Loaded successfully!")
+        }
+
+        override fun onAdFailedToLoad(errorCode: Int) {
+            // Code to be executed when an ad request fails.
+            when(errorCode){
+                AdRequest.ERROR_CODE_INTERNAL_ERROR -> Log.e(TAG,"Couldn't load InterstitialAd: Unknown error. Might be invalid response from server")
+                AdRequest.ERROR_CODE_NETWORK_ERROR -> Log.e(TAG,"Couldn't load InterstitialAd: BAD internet connectivity")
+                AdRequest.ERROR_CODE_INVALID_REQUEST -> Log.e(TAG,"Couldn't load InterstitialAd: Invalid request. Check IDs used are correct")
+                AdRequest.ERROR_CODE_NO_FILL -> Log.e(TAG,"Couldn't load InterstitialAd: No ads available to load")
+                else ->
+                    Log.e(TAG, "Banner Ad failed to load. Error Code: $errorCode")
+            }
+        }
+
+        override fun onAdOpened() {
+            // Code to be executed when an ad opens an overlay that
+            // covers the screen.
+            Log.d(TAG, "InterstitialAd is opened")
+        }
+
+        override fun onAdLeftApplication() {
+            // Code to be executed when the user has left the app.
+            Log.d(TAG, "User left the application")
+        }
+
+        override fun onAdClosed() {
+            // Code to be executed when when the user is about to return
+            // to the app after tapping on an ad.
+            Log.d(TAG, "InterstitialAd closed successfully!")
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
