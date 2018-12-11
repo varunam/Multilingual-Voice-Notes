@@ -1,10 +1,14 @@
 package com.kannadavoicenotes.app.kannadavoicenotes.adapter
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.kannadavoicenotes.app.kannadavoicenotes.R
@@ -43,6 +47,9 @@ class HistoryAdapter(shareClickCallbacks: ShareClickCallbacks) : RecyclerView.Ad
         holder.share.setOnClickListener {
             shareClickCallbacks!!.onShareButtonClicked(textList[position])
         }
+        holder.copyIcon.setOnClickListener {
+            copyToClipboard(holder.copyIcon.context, textList[position].text!!)
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -50,6 +57,13 @@ class HistoryAdapter(shareClickCallbacks: ShareClickCallbacks) : RecyclerView.Ad
         var text = itemView.findViewById<TextView>(R.id.history_text_id)!!
         var share = itemView.findViewById<ImageView>(R.id.history_share_id)!!
         var timeStamp = itemView.findViewById<TextView>(R.id.history_timestamp_id)!!
+        var copyIcon = itemView.findViewById<ImageView>(R.id.history_copy_icon)!!
+    }
 
+    private fun copyToClipboard(context: Context, text: String) {
+        val clipboard = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("text", text)
+        clipboard.primaryClip = clip
+        Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_LONG).show()
     }
 }
