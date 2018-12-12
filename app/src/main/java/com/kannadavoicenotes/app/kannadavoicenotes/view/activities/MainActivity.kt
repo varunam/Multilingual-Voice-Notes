@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
                 val actionBarSize = toolbar!!.height
                 val actionBarWidth = toolbar!!.width
                 val x = actionBarWidth - actionBarWidth / 5
-                val y = actionBarSize / 2
+                val y = actionBarSize
                 Point(x, y)
             }
             .setContentTitle("Choose language!")
