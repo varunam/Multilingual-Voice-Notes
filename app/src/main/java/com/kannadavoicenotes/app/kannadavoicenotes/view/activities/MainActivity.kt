@@ -220,8 +220,9 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
                 ShareCompat.IntentBuilder.from(this)
                     .setChooserTitle("share via")
                     .setText(
-                        "Check out this awesome multi-lingual voice notes app by the developers of \"Learn Kannada SmartApp\"" +
-                                "\n\nDownload from here: " +
+                        "Check out this awesome multi-lingual typing assistant app which helps you type words and sentences without typing!!\n" +
+                                "The app supports Kannada, Hindi, Tamil, Telugu, Malayalam and many more languages too" +
+                                "\n\nDownload it now: " +
                                 AppInfo.getAppLinkOnPlayStore(applicationContext)
                     ).setType("text/plain")
                     .startChooser()

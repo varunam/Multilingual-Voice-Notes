@@ -97,7 +97,7 @@ class SpeechToTextFragment : Fragment() {
 
         shareContent!!.setOnClickListener {
             val mimeType = "text/plain"
-            val shareText = resultTextView!!.text.toString() + "\nShared via Multi-lingual Voice Notes"
+            val shareText = resultTextView!!.text.toString() + "\nShared via ${resources.getString(R.string.app_name)}"
             val title = "share via"
             ShareCompat.IntentBuilder.from(activity!!)
                 .setChooserTitle(title)
