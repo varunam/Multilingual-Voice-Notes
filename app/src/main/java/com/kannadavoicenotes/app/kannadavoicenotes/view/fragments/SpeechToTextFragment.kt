@@ -82,11 +82,13 @@ class SpeechToTextFragment : Fragment() {
         val micLayout = view.findViewById<ImageView>(R.id.micId)
         micLayout.setOnClickListener {
             val speechToTextConverter = SpeechToTextConverter(activity!!)
-            speechToTextConverter.start(
-                LanguagePreference.getSelectedLanguage(activity!!),
-                speechToTextConverter.getPromptFor(LanguagePreference.getSelectedLanguage(activity!!)),
-                SpeechToTextKey
-            )
+            if (!speechToTextConverter.start(
+                    LanguagePreference.getSelectedLanguage(activity!!),
+                    SpeechToTextKey
+                )
+            ) {
+                Toast.makeText(context!!, "Device not supported", Toast.LENGTH_LONG).show()
+            }
 
         }
 
