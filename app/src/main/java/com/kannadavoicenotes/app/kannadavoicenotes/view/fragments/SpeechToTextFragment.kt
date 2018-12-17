@@ -18,7 +18,6 @@ import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import app.speechtotext.Language
 import app.speechtotext.SpeechToTextConverter
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -85,7 +84,7 @@ class SpeechToTextFragment : Fragment() {
             val speechToTextConverter = SpeechToTextConverter(activity!!)
             speechToTextConverter.start(
                 LanguagePreference.getSelectedLanguage(activity!!),
-                getPromptForChosenLanguage(),
+                speechToTextConverter.getPromptFor(LanguagePreference.getSelectedLanguage(activity!!)),
                 SpeechToTextKey
             )
 
@@ -110,17 +109,6 @@ class SpeechToTextFragment : Fragment() {
     private fun loadBannerAd() {
         val adRequest = AdRequest.Builder().build()
         bannerAdView!!.loadAd(adRequest)
-    }
-
-    private fun getPromptForChosenLanguage(): String? {
-        return when (LanguagePreference.getSelectedLanguage(activity!!)) {
-            Language.KANNADA -> resources.getString(R.string.kannada_prompt)
-            Language.HINDI -> resources.getString(R.string.hindi_prompt)
-            Language.MALAYALAM -> resources.getString(R.string.malayalam_prompt)
-            Language.TELUGU -> resources.getString(R.string.telugu_prompt)
-            Language.TAMIL -> resources.getString(R.string.tamil_prompt)
-            else -> resources.getString(R.string.english_prompt)
-        }
     }
 
     private fun showFabs() {

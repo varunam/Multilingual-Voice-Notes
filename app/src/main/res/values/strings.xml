@@ -24,4 +24,6 @@
     <string name="telugu_prompt">ఏదైనా చెప్పు</string>
     <string name="tamil_prompt">ஏதாவது கூறுங்கள்</string>
     <string name="english_prompt">Say something</string>
+    <string name="marathi_prompt">काहीतरी बोला</string>
+    <string name="gujarathi_prompt">કંઈક બોલ</string>
 </resources>
