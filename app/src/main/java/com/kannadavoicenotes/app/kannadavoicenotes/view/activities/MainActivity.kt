@@ -221,7 +221,7 @@ class MainActivity : AppCompatActivity(), SpeechConvertedListener {
                     .setChooserTitle("share via")
                     .setText(
                         "Check out this awesome multi-lingual typing assistant app which helps you type words and sentences without typing!!\n" +
-                                "The app supports Kannada, Hindi, Tamil, Telugu, Malayalam and many more languages too" +
+                                "The app supports Kannada, Hindi, Tamil, Telugu, Malayalam and 13 more languages too" +
                                 "\n\nDownload it now: " +
                                 AppInfo.getAppLinkOnPlayStore(applicationContext)
                     ).setType("text/plain")

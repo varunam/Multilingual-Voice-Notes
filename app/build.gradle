@@ -11,9 +11,9 @@ android {
         applicationId "com.kannadavoicenotes.app.kannadavoicenotes"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 3
+        versionCode 5
         vectorDrawables.useSupportLibrary = true
-        versionName "1.02"
+        versionName "1.04"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
